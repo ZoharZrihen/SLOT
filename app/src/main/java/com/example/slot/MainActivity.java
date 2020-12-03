@@ -8,14 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button;
+    private Button buttonSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button= findViewById(R.id.button_register);
-        button.setOnClickListener(new View.OnClickListener(){
+        buttonSignUp= findViewById(R.id.button_register);
+        buttonSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 openSignUpActivity();
