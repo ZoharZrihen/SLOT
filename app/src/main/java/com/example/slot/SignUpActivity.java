@@ -15,13 +15,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import org.w3c.dom.Text;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import static java.net.URLEncoder.encode;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
+    private EditText permission;
     private Button register;
+    private Button back;
 
     private FirebaseAuth auth;
     @Override
@@ -32,32 +41,50 @@ public class SignUpActivity extends AppCompatActivity {
         email=findViewById(R.id.email);
         password=findViewById(R.id.password);
         register=findViewById(R.id.signup);
+        permission=findViewById(R.id.permission);
+        back=findViewById(R.id.returnfromsignup);
 
         auth=FirebaseAuth.getInstance();
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                finish();
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String txt_email=email.getText().toString();
                 String txt_password=password.getText().toString();
+                String txt_permission=permission.getText().toString();
 
-                if(TextUtils.isEmpty(txt_email )|| TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(SignUpActivity.this,"נא להזין סיסמה!",Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(txt_email )|| TextUtils.isEmpty(txt_password) || TextUtils.isEmpty(txt_permission)){
+                    Toast.makeText(SignUpActivity.this,"נא להזין פרטים!",Toast.LENGTH_SHORT).show();
                 } else if(txt_password.length()<6){
                     Toast.makeText(SignUpActivity.this,"סיסמה חייבת להיות בת לפחות 6 תווים",Toast.LENGTH_SHORT).show();
-                }else{
-                    registerUser(txt_email,txt_password);
+                }else if(txt_permission.equals( "מרצה") || txt_permission.equals("סטודנט")){
+
+                    registerUser(txt_email,txt_password,txt_permission);
+                }
+                else{
+                    Toast.makeText(SignUpActivity.this,"נא להזין מרצה/סטודנט!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void registerUser(String email, String password) {
+    private void registerUser(String email, String password,String permission) {
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SignUpActivity.this,new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(SignUpActivity.this,"הרשמה בוצעה בהצלחה!",Toast.LENGTH_SHORT).show();
+                    if(permission.equals("מרצה")) {
+                        FirebaseDatabase.getInstance().getReference().child("LecturerUser").child(auth.getUid()).setValue(email);
+                    }else{
+                        FirebaseDatabase.getInstance().getReference().child("StudentUser").child(auth.getUid()).setValue(email);
+                    }
                     startActivity(new Intent(SignUpActivity.this, SignIn_Activity.class));
                     finish();
                 } else{

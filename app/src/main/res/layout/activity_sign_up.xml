@@ -19,6 +19,12 @@
         android:hint="הכנס סיסמה"
         android:id="@+id/password"
         android:layout_marginTop="150dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="מרצה/סטודנט"
+        android:id="@+id/permission"
+        android:layout_marginTop="200dp"/>
 
     <Button
         android:layout_width="match_parent"
@@ -27,4 +33,14 @@
         android:layout_below="@id/password"
         android:text="הירשם"
         android:id="@+id/signup"/>
+    <Button
+        android:id="@+id/returnfromsignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="306dp"
+        android:text="חזור" />
+
 </RelativeLayout>
