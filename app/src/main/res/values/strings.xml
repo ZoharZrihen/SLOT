@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SLOT</string>
+    <string name="enterMailAddress">הכנס כתובת אימייל</string>
+    <string name="enterPassword">הכנס סיסמה</string>
+    <string name="signIn">התחבר</string>
+    <string name="back">חזור</string>
 </resources>

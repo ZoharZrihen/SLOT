@@ -13,12 +13,14 @@
         android:hint="הכנס כתובת אימייל"
         android:id="@+id/email"
         android:layout_marginTop="100dp"/>
+
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:hint="הכנס סיסמה"
-        android:id="@+id/password"
-        android:layout_marginTop="150dp"/>
+        android:inputType="textPassword" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
