@@ -4,4 +4,9 @@
     <string name="enterPassword">הכנס סיסמה</string>
     <string name="signIn">התחבר</string>
     <string name="back">חזור</string>
+    <string name="setAppointment">נהל שעות קבלה</string>
+    <string name="showAppointment">הצג שעות קבלה</string>
+    <string name="goBack">חזור</string>
+    <string name="welcome_professor">ברוך הבא מרצה</string>
+    <string name="singOut">התנתק</string>
 </resources>

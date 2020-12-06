@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,10 +26,8 @@ public class SignIn_Activity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private Button back;
-    private static String permission;
 
     private FirebaseAuth auth;
-    //private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +37,8 @@ public class SignIn_Activity extends AppCompatActivity {
         password=findViewById(R.id.password_signIn);
         login= findViewById(R.id.signin);
         back=findViewById(R.id.returnfromsignin);
-
-      //  mDatabase=FirebaseDatabase.getInstance().getReference().child("Users");
         auth= FirebaseAuth.getInstance();
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,11 +70,10 @@ public class SignIn_Activity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 startActivity(new Intent(SignIn_Activity.this, StudentMainActivity.class));
-                                finish();
                             } else {
                                 startActivity(new Intent(SignIn_Activity.this, LecturerMainActivity.class));
-                                finish();
                             }
+                            finish();
 
                         }
 
