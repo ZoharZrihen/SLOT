@@ -7,10 +7,42 @@
     tools:context=".StudentMainActivity">
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="174dp"
-        android:layout_height="137dp"
-        android:text="Test for STUDENT"
-        tools:layout_editor_absoluteX="77dp"
-        tools:layout_editor_absoluteY="89dp" />
+        android:id="@+id/welcome_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_centerHorizontal="true"
+        android:text="@string/welcome_student"
+        android:textColor="@color/purpBlue"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="31dp" />
+
+    <Button
+        android:id="@+id/set_appointment_student"
+        android:layout_width="192dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="240dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/student_set_appointment" />
+
+    <Button
+        android:id="@+id/show_appointment_student"
+        android:layout_width="192dp"
+        android:layout_height="63dp"
+        android:layout_below="@id/set_appointment_student"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/student_my_appointment" />
+
+    <Button
+        android:id="@+id/sign_out_student_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/show_appointment_student"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="235dp"
+        android:text="@string/singOut" />
 </RelativeLayout>

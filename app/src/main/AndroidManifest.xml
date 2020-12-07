@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SLOT">
-        <activity android:name=".showAppointmentProfessorActivity"></activity>
+        <activity android:name=".showAppointmentStudentActivity"></activity>
+        <activity android:name=".setAppointmentStudentActivity" />
+        <activity android:name=".showAppointmentProfessorActivity" />
         <activity android:name=".setAppointmentProfessorActivity" />
         <activity android:name=".StudentMainActivity" />
         <activity android:name=".LecturerMainActivity" />

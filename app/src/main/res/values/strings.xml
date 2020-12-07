@@ -6,7 +6,10 @@
     <string name="back">חזור</string>
     <string name="setAppointment">נהל שעות קבלה</string>
     <string name="showAppointment">הצג שעות קבלה</string>
+    <string name="student_my_appointment">שעות קבלה שקבעתי</string>
     <string name="goBack">חזור</string>
     <string name="welcome_professor">ברוך הבא מרצה</string>
+    <string name="welcome_student">ברוך הבא סטודנט</string>
     <string name="singOut">התנתק</string>
+    <string name="student_set_appointment">קבע שעת קבלה</string>
 </resources>
