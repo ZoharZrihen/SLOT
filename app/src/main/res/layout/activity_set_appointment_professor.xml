@@ -6,13 +6,75 @@
     android:layout_height="wrap_content"
     tools:context=".setAppointmentProfessorActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/setAppointment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:hint="הכנס שם קורס"
+        android:id="@+id/Coursename"
+        android:layout_marginTop="100dp"/>
+
+
+    <Button
+        android:id="@+id/pickdate"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Coursename"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/setDate" />
+    <Button
+        android:id="@+id/pickstarttime"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickdate"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/setStartTime" />
+    <Button
+        android:id="@+id/pickendtime"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickstarttime"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/setEndTime" />
+
+    <Button
+        android:id="@+id/backfromsetproffesor"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickendtime"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="247dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="9dp"
+        android:text="@string/goBack" />
+
+    <Button
+        android:id="@+id/setmeetingProffesor"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickendtime"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="137dp"
+        android:layout_marginEnd="245dp"
+        android:text="@string/set" />
+
 </RelativeLayout>
