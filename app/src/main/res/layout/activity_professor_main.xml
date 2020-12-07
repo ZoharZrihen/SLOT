@@ -37,12 +37,12 @@
 
     <Button
         android:id="@+id/sign_out_professor_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="114dp"
+        android:layout_height="76dp"
         android:layout_below="@id/show_appointment_professor"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="262dp"
-        android:layout_marginEnd="307dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="234dp"
         android:text="@string/singOut" />
 
 </RelativeLayout>
