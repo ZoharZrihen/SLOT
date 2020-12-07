@@ -26,8 +26,8 @@ public class SignIn_Activity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private Button back;
-
     private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

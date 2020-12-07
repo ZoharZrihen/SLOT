@@ -1,7 +1,7 @@
 package com.example.slot;
 
 public class User {
-    private String mail, UserID, name, permission;
+    private String mail, userID, name, permission;
 
     public User(){
 
@@ -9,10 +9,10 @@ public class User {
 
 
     public User(String m, String u, String n, String p){
-        mail=m;
-        UserID=u;
-        name=n;
-        permission=p;
+        mail= m;
+        userID = u;
+        name= n;
+        permission = p;
     }
 
     public String getMail() {
@@ -20,7 +20,7 @@ public class User {
     }
 
     public String getUserID() {
-        return UserID;
+        return userID;
     }
 
     public String getName() {
