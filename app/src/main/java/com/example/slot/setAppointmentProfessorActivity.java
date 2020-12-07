@@ -28,11 +28,13 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
     private Button setDate;
     private Button startTime, endTime;
     private Button back;
+    private Button set;
     private Calendar calendar;
     private DatePickerDialog dpd;
     private TimePickerDialog Stpd, Etpd;
-    private int startHour, startMinute, endHour, endMinute;
+    private int startHour, startMinute, endHour, endMinute,Interval;
     private int day,month,year;
+    private String course;
     private EditText courseName;
     private EditText interval;
     private FirebaseAuth auth;
@@ -48,10 +50,11 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
         startTime=findViewById(R.id.pickstarttime);
         endTime=findViewById(R.id.pickendtime);
         interval=findViewById(R.id.interval);
+        set=findViewById(R.id.setmeetingProffesor);
 
 
-        String course= courseName.getText().toString();
-        int Interval=Integer.parseInt(interval.getText().toString());
+//        String course= courseName.getText().toString();
+        //int Interval=Integer.parseInt(interval.getText().toString());
         auth = FirebaseAuth.getInstance();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("LecturerUser").child(auth.getUid());
@@ -65,6 +68,20 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Interval=Integer.parseInt(interval.getText().toString());
+                 course= courseName.getText().toString();
+                 Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute,Interval, day,month,year);
+                 String appointmentID=course + "- " +user.getName() + "- " +day+"-"+month+"-"+year;
+                 FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).setValue(appointment); //putting appointments in the DB
+                 Toast.makeText(setAppointmentProfessorActivity.this,"שעת קבלה הוגדרה בהצלחה",Toast.LENGTH_LONG).show();
+                 startActivity(new Intent(setAppointmentProfessorActivity.this,LecturerMainActivity.class));
+                 finish();
             }
         });
 
@@ -130,9 +147,9 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
             }
         });
 
-        Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute,Interval, day,month,year);
-        String appointmentID=course + " - " +user.getName() + " - " +day+"/"+month+"/"+year;
-
+//        Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute,Interval, day,month,year);
+//        String appointmentID=course + "- " +user.getName() + "- " +day+"/"+month+"/"+year;
+//        FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).setValue(appointment); //putting appointments in the DB
 
 
     }
