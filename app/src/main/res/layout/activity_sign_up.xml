@@ -29,22 +29,29 @@
         android:id="@+id/permission"
         android:inputType="textPersonName"
         android:layout_marginTop="200dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="שם: "
+        android:id="@+id/name"
+        android:layout_marginTop="250dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:layout_below="@id/password"
+        android:layout_below="@id/name"
         android:text="הירשם"
         android:id="@+id/signup"/>
+
     <Button
         android:id="@+id/returnfromsignup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_below="@id/signup"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="260dp"
-        android:layout_marginEnd="306dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="247dp"
         android:text="חזור" />
 
 </RelativeLayout>
