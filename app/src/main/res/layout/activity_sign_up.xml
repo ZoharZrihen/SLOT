@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="הכנס כתובת אימייל"
         android:id="@+id/email"
+        android:inputType="textEmailAddress"
         android:layout_marginTop="100dp"/>
 
     <EditText
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:hint="מרצה/סטודנט"
         android:id="@+id/permission"
+        android:inputType="textPersonName"
         android:layout_marginTop="200dp"/>
 
     <Button
