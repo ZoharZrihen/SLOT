@@ -1,6 +1,5 @@
-package com.example.slot;
+package com.example.slot.professor;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -14,8 +13,10 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.slot.utilclasses.Appointment;
+import com.example.slot.R;
+import com.example.slot.utilclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,7 +81,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                  String appointmentID=course + "- " +user.getName() + "- " +day+"-"+month+"-"+year;
                  FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).setValue(appointment); //putting appointments in the DB
                  Toast.makeText(setAppointmentProfessorActivity.this,"שעת קבלה הוגדרה בהצלחה",Toast.LENGTH_LONG).show();
-                 startActivity(new Intent(setAppointmentProfessorActivity.this,LecturerMainActivity.class));
+                 startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
                  finish();
             }
         });
@@ -89,7 +90,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(setAppointmentProfessorActivity.this,LecturerMainActivity.class));
+                startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
                 finish();
             }
         });

@@ -1,4 +1,4 @@
-package com.example.slot;
+package com.example.slot.student;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.slot.MainActivity;
+import com.example.slot.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class StudentMainActivity extends AppCompatActivity {
@@ -28,7 +30,7 @@ public class StudentMainActivity extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StudentMainActivity.this,setAppointmentStudentActivity.class ));
+                startActivity(new Intent(StudentMainActivity.this, setAppointmentStudentActivity.class ));
                 finish();
             }
         });
@@ -36,7 +38,7 @@ public class StudentMainActivity extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StudentMainActivity.this,showAppointmentStudentActivity.class ));
+                startActivity(new Intent(StudentMainActivity.this, showAppointmentStudentActivity.class ));
                 finish();
             }
         });

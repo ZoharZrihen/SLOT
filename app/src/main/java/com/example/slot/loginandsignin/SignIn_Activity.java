@@ -1,4 +1,4 @@
-package com.example.slot;
+package com.example.slot.loginandsignin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.slot.professor.ProfessorMainActivity;
+import com.example.slot.MainActivity;
+import com.example.slot.R;
+import com.example.slot.student.StudentMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -71,7 +75,7 @@ public class SignIn_Activity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 startActivity(new Intent(SignIn_Activity.this, StudentMainActivity.class));
                             } else {
-                                startActivity(new Intent(SignIn_Activity.this, LecturerMainActivity.class));
+                                startActivity(new Intent(SignIn_Activity.this, ProfessorMainActivity.class));
                             }
                             finish();
 

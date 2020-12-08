@@ -1,4 +1,4 @@
-package com.example.slot;
+package com.example.slot.professor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.slot.MainActivity;
+import com.example.slot.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LecturerMainActivity extends AppCompatActivity {
+public class ProfessorMainActivity extends AppCompatActivity {
     private Button set, show, logOut;
     private FirebaseAuth auth;
 
@@ -26,7 +28,7 @@ public class LecturerMainActivity extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LecturerMainActivity.this, setAppointmentProfessorActivity.class));
+                startActivity(new Intent(ProfessorMainActivity.this, setAppointmentProfessorActivity.class));
                 finish();
             }
         });
@@ -34,7 +36,7 @@ public class LecturerMainActivity extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LecturerMainActivity.this, showAppointmentProfessorActivity.class));
+                startActivity(new Intent(ProfessorMainActivity.this, showAppointmentProfessorActivity.class));
                 finish();
             }
         });
@@ -43,7 +45,7 @@ public class LecturerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-                startActivity(new Intent(LecturerMainActivity.this, MainActivity.class));
+                startActivity(new Intent(ProfessorMainActivity.this, MainActivity.class));
                 finish();
             }
         });

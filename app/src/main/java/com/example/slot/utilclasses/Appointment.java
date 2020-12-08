@@ -1,4 +1,4 @@
-package com.example.slot;
+package com.example.slot.utilclasses;
 
 import java.util.HashMap;
 import java.util.Map;

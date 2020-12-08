@@ -1,8 +1,10 @@
-package com.example.slot;
+package com.example.slot.professor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.slot.R;
 
 public class showAppointmentProfessorActivity extends AppCompatActivity {
 

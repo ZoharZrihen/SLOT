@@ -1,4 +1,4 @@
-package com.example.slot;
+package com.example.slot.utilclasses;
 
 public class User {
     private String mail, userID, name, permission;

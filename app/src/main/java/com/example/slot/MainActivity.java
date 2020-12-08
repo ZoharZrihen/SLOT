@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.slot.loginandsignin.SignIn_Activity;
+import com.example.slot.loginandsignin.SignUpActivity;
+
 public class MainActivity extends AppCompatActivity {
     private Button SignUp;
     private Button SignIn;
