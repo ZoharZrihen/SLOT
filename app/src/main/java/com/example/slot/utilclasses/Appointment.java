@@ -15,19 +15,17 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class Appointment implements Serializable {
-
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Duration interval;
     private Duration totalDuration;
-    private Duration slotDuration;
+//  private Duration slotDuration;
     private Map<String, Boolean> slotsMap;
 
     public Appointment() {
         // Default constructor required for calls to DataSnapshot.getValue(Appointment.class)
     }
-
 
     public Appointment(int startHour, int startMinute, int endHour, int endMinute, int interval, int day, int month, int year) {
         this.date = LocalDate.of(year, month, day);
@@ -83,12 +81,12 @@ public class Appointment implements Serializable {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("Date", this.date.toString());
+        result.put("date", this.date.toString());
         result.put("startTime", this.startTime.toString());
         result.put("endTime", this.endTime.toString());
         result.put("totalDuration", this.totalDuration.toString());
         result.put("interval", this.interval.toString());
-        result.put("slots", this.slotsMap.toString());
+        result.put("slots", this.slotsMap);
         return result;
     }
 
@@ -115,8 +113,33 @@ public class Appointment implements Serializable {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public Duration getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Duration interval) {
+        this.interval = interval;
+    }
+
+    public Duration getTotalDuration() {
+        return totalDuration;
+    }
+
+    public void setTotalDuration(Duration totalDuration) {
+        this.totalDuration = totalDuration;
+    }
+
+    public Map<String, Boolean> getSlotsMap() {
+        return slotsMap;
+    }
+
+    public void setSlotsMap(Map<String, Boolean> slotsMap) {
+        this.slotsMap = slotsMap;
+    }
+
     public static void main(String[] args) {
-        Appointment appointment = new Appointment(7, 30, 8, 30, 25, 1, 1, 1);
+        Appointment appointment = new Appointment(7, 30, 8, 30, 22, 1, 1, 1);
         System.out.println(appointment.toMap());
     }
 }

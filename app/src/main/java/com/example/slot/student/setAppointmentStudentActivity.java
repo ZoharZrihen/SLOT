@@ -10,27 +10,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.slot.R;
 import com.example.slot.utilclasses.Appointment;
-import com.example.slot.utilclasses.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class setAppointmentStudentActivity extends AppCompatActivity {
     private Spinner spinner_courses;
     private Spinner spinner_dates;
-    private Button  backToStudenMain;
+    private Button backToStudentMain;
 
     Map<String, Appointment> available_courses = new HashMap<>();
     @Override
@@ -40,8 +36,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity {
 
         spinner_courses = findViewById(R.id.spinner_courses);
 
-        backToStudenMain = findViewById(R.id.go_back);
-        backToStudenMain.setOnClickListener(new View.OnClickListener() {
+        backToStudentMain = findViewById(R.id.go_back);
+        backToStudentMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(setAppointmentStudentActivity.this, StudentMainActivity.class);
