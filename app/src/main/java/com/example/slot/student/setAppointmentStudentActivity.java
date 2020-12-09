@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,7 +33,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Spinner spinner_courses_names;
     private Spinner spinner_dates;
     private Button  backToStudenMain;
-    private TextView chosenCourse;
+    Map<String, String> meetings_info = new HashMap<>();
 
     DatabaseReference rootRef, appointmentRef;
 
@@ -40,13 +41,11 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         //<Name of the course, all the info about it>
         // < Introduction to Java, {time=12:00, slot = ......}>
-        Map<String, String> meetings_info = new HashMap<>();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_appointment_student);
-
+        spinner_dates = findViewById(R.id.spinner_dates);
         spinner_courses_names = findViewById(R.id.spinner_courses);
-        chosenCourse = findViewById(R.id.choose_course);
         backToStudenMain = findViewById(R.id.go_back);
         backToStudenMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +67,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
                     String name_of_meeting = data_snapshot.getKey();
                     String all_info = data_snapshot.getValue().toString();
                     meetings_info.put(name_of_meeting, all_info);
-                    System.out.println("\n\n\n\n"+ meetings_info.toString());
+//                    System.out.println("\n\n\n\n"+ meetings_info.toString());
+                    spinner_courses_init(meetings_info);
                 }
             }
             @Override
@@ -77,9 +77,32 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         });
 
         // A list of only the courses name (needed for the adapter.
-        ArrayList<String> courses_names = new ArrayList<>(meetings_info.keySet());
+//        ArrayList<String> courses_names = new ArrayList<>(meetings_info.keySet());
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner_courses_names.setAdapter(adapter);
+//        spinner_courses_names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selected_by_user = spinner_courses_names.getSelectedItem().toString();
+////                String selected_by_user2 = parent.getItemAtPosition(position).toString();
+//                setSpinner_dates_init(meetings_info, selected_by_user);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+
+
+    }
+    private void spinner_courses_init(Map <String,String>meetings_info2){
+        ArrayList<String> courses_names = new ArrayList<>(meetings_info2.keySet());
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,courses_names);
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_courses_names.setAdapter(adapter);
         spinner_courses_names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -87,7 +110,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected_by_user = spinner_courses_names.getSelectedItem().toString();
 //                String selected_by_user2 = parent.getItemAtPosition(position).toString();
-                chosenCourse.setText( selected_by_user);
+                setSpinner_dates_init(meetings_info2, selected_by_user);
             }
 
             @Override
@@ -95,8 +118,17 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
 
             }
         });
+    }
 
+    private void setSpinner_dates_init(Map <String,String>meetings_info2, String chosen_course){
+        String infoOfCourseChosen = meetings_info2.get(chosen_course);
+        //TODO Elements to extract from that string:
+        // Check if there are 'slots' that are available (marked true in field 'slots'
+        //          If there is, then show them in this format DATE - TIME
+        //          Else show 'אין מקום פנוי לקורס הזה'
 
     }
+
+
 
 }
