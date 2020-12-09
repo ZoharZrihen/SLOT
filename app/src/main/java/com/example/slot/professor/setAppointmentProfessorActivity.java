@@ -21,9 +21,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class setAppointmentProfessorActivity extends AppCompatActivity {
     private Button setDate;
@@ -62,6 +65,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue(User.class));
                  user = dataSnapshot.getValue(User.class);
                 System.out.println(user.getName());
             }
@@ -71,18 +75,46 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
 
             }
         });
-
+            /*
+            * Save to DB
+            *
+            * */
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Interval=Integer.parseInt(interval.getText().toString());
+
+                Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute, Interval, day, month, year);
+                System.out.println(appointment.toMap());
+                String course = courseName.getText().toString();
+                String key = course + "-" + user.getName() + "-" +appointment.getDate();
+
+                Map<String, Object> dataMap = appointment.toMap();
+                FirebaseDatabase.getInstance().getReference().child("appointments").child(key).setValue(dataMap); //putting appointments in the DB
+//
+//                DatabaseReference mDbRef = database.getReference();
+//                Map<String, Object> updates = new HashMap<>();
+//                updates.put("/appointments/" ,dataMap);
+//                mDbRef.updateChildren(updates);
+////
+//
+//
+//
+//                DatabaseReference ref = database.getReference("appointments");
+//                ref.child(appointmentKey).updateChildren(dataMap);
+
+                startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
+                finish();
+//                ref.updateChildren(dataMap);
+
+ /*                Interval=Integer.parseInt(interval.getText().toString());
                  course= courseName.getText().toString();
                  Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute,Interval, day,month,year);
                  String appointmentID=course + "- " +user.getName() + "- " +day+"-"+month+"-"+year;
                  FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).setValue(appointment); //putting appointments in the DB
+                 FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).child("slotsMap").setValue("appointment.getSlot()"); //putting appointments in the DB
                  Toast.makeText(setAppointmentProfessorActivity.this,"שעת קבלה הוגדרה בהצלחה",Toast.LENGTH_LONG).show();
                  startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
-                 finish();
+                 finish();*/
             }
         });
 

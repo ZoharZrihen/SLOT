@@ -1,98 +1,123 @@
 package com.example.slot.utilclasses;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Appointment {
+@IgnoreExtraProperties
+public class Appointment implements Serializable {
 
-    private int startHour, startMinute, endHour, endMinute, interval;
-    private int day,month,year;
-    // {date, isAvailable}
-    private Map<String, Boolean> slot;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Duration interval;
+    private Duration totalDuration;
+    private Duration slotDuration;
+    private Map<String, Boolean> slotsMap;
+
+    public Appointment() {
+        // Default constructor required for calls to DataSnapshot.getValue(Appointment.class)
+    }
+
 
     public Appointment(int startHour, int startMinute, int endHour, int endMinute, int interval, int day, int month, int year) {
-        this.startHour = startHour;
-        this.startMinute = startMinute;
-        this.endHour = endHour;
-        this.endMinute = endMinute;
-        this.interval = interval;
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        this.slot = new HashMap<>();
-
-        initSlotMAp();
+        this.date = LocalDate.of(year, month, day);
+        this.startTime = LocalTime.of(startHour, startMinute);
+        this.endTime = LocalTime.of(endHour, endMinute);
+        this.interval = Duration.ofMinutes(interval);
+        this.totalDuration = calculateDuration(startTime, endTime);
+        this.slotsMap = new LinkedHashMap<>();
+        calculateSlotsMap();
+/*
+        Uncomment and run see whats happening
+        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT,FormatStyle.SHORT);
+        private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        System.out.println("Appointment date: " + this.localDate.format(dateFormatter));
+        System.out.println("Start time: " + this.startTime.format(timeFormatter));
+        System.out.println("EndTime: " + this.endTime.format(timeFormatter));
+        System.out.println("Duration: " + this.totalDuration.toMinutes());
+        System.out.println("Interval: " + this.interval);
+        System.out.println("slots: " + this.slotDuration.toMinutes());
+        System.out.println("slotsMap: " + this.slotsMap);
+*/
     }
 
-    private void initSlotMAp() {
-        int startH = this.startHour;
-        int startM = this.startMinute;
-        String startTime = startHour + ":" + startMinute;
 
-        int numberOfSlots = calculateTime();
-//        HH:mm - HH:mm + interval
-        int hh = startH;
-        int mm = startM ;
-        for (int i = 0; i < numberOfSlots ; i++) {
-            int temp = mm + interval;
-            if (temp >= 60){
-                temp = temp - 60;
-                hh++;
-                mm = temp;
-            }
+    private Duration calculateDuration(Temporal start, Temporal end) {
+        return Duration.between(start, end);
+    }
+    //    Calculate the interval between slots
+//    Map
+//    {
+//    { 'Time interval' : true}
+//    { 'Time Interval 2' : true}
+//      ...
+//     }
+
+    private void calculateSlotsMap() {
+        LocalTime startTime = LocalTime.from(this.startTime);
+        LocalTime endTime = LocalTime.from(this.endTime);
+
+        while (startTime.isBefore(endTime)) {
+            LocalTime slotEnd = startTime.plusMinutes(this.interval.toMinutes());
+            String key = "";
+            if (slotEnd.isBefore(endTime))
+                key = startTime.toString() + " - " + slotEnd.toString();
             else
-            {
-                mm += interval;
-            }
-
-            String endTime = hh + ":" + mm;
-            slot.put(startTime + "-" + endTime, true);
-            startTime = endTime;
+                key = startTime.toString() + " - " + endTime.toString();
+            this.slotsMap.put(key, true);
+            startTime = slotEnd;
         }
-        System.out.println(slot);
     }
 
-    private int calculateTime() {
-        int minOfApp = (endHour - startHour) * 60 + (endMinute - startMinute);
-        return minOfApp / interval;
-
-
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("Date", this.date.toString());
+        result.put("startTime", this.startTime.toString());
+        result.put("endTime", this.endTime.toString());
+        result.put("totalDuration", this.totalDuration.toString());
+        result.put("interval", this.interval.toString());
+        result.put("slots", this.slotsMap.toString());
+        return result;
     }
 
-    public int getStartHour() {
-        return startHour;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public int getStartMinute() {
-        return startMinute;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public int getEndHour() {
-        return endHour;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public int getEndMinute() {
-        return endMinute;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
-    public int getInterval() {
-        return interval;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public int getDay() {
-        return day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
     public static void main(String[] args) {
-        Appointment appointment = new Appointment(7,30,8,30,15,1,1,1);
-
+        Appointment appointment = new Appointment(7, 30, 8, 30, 25, 1, 1, 1);
+        System.out.println(appointment.toMap());
     }
 }
+
