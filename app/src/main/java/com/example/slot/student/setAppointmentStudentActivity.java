@@ -28,22 +28,25 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class setAppointmentStudentActivity extends AppCompatActivity {
-    private Spinner spinner_courses;
+public class setAppointmentStudentActivity extends AppCompatActivity  {
+    private Spinner spinner_courses_names;
     private Spinner spinner_dates;
     private Button  backToStudenMain;
+    private TextView chosenCourse;
 
     DatabaseReference rootRef, appointmentRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //<Name of the course, all the info about it>
+        // < Introduction to Java, {time=12:00, slot = ......}>
         Map<String, String> meetings_info = new HashMap<>();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_appointment_student);
 
-        spinner_courses = findViewById(R.id.spinner_courses);
-
+        spinner_courses_names = findViewById(R.id.spinner_courses);
+        chosenCourse = findViewById(R.id.choose_course);
         backToStudenMain = findViewById(R.id.go_back);
         backToStudenMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +57,10 @@ public class setAppointmentStudentActivity extends AppCompatActivity {
         });
         //Database reference pointing to the root of the database.
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //Database reference to 'appointments'
         DatabaseReference ref = database.getReference("appointments");
+        // Retrieving the information from Firebase and loading it into
+        // the hash map 'meetings_info'
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -70,26 +76,23 @@ public class setAppointmentStudentActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("\n\n\n\n"+ meetings_info.toString());
-        int numberCourses = meetings_info.keySet().size();
-        String[] courses_names = new String[numberCourses];
-        Iterator<String> iter = meetings_info.keySet().iterator();
-        for(int i = 0 ; i < numberCourses; i++){
-            courses_names[i] = iter.next();
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,courses_names);
+        // A list of only the courses name (needed for the adapter.
+        ArrayList<String> courses_names = new ArrayList<>(meetings_info.keySet());
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,courses_names);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_courses.setAdapter(adapter);
-
-        spinner_courses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_courses_names.setAdapter(adapter);
+        spinner_courses_names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String course_name = parent.getItemAtPosition(position).toString();
-                Toast.makeText(parent.getContext(), "בחרת: " + course_name,Toast.LENGTH_LONG).show();
+                String selected_by_user = spinner_courses_names.getSelectedItem().toString();
+//                String selected_by_user2 = parent.getItemAtPosition(position).toString();
+                chosenCourse.setText( selected_by_user);
             }
+
             @Override
-            public void onNothingSelected(AdapterView <?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
