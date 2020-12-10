@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class setAppointmentStudentActivity extends AppCompatActivity  {
@@ -36,7 +37,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Spinner spinner_dates;
     private Button  backToStudenMain;
     private Button setTheAppointment;
-    Map<String, String> meetings_info = new HashMap<>();
+
     Map<String, Map<String, Object>> Meetings = new HashMap<>();
 
     DatabaseReference rootRef, appointmentRef;
@@ -70,11 +71,6 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data_snapshot : snapshot.getChildren()){
-//                    String name_of_meeting = data_snapshot.getKey();
-//                    String all_info = data_snapshot.getValue().toString();
-//                    meetings_info.put(name_of_meeting, all_info);
-//                    spinner_courses_init(meetings_info);
-
                     String name_course = data_snapshot.getKey();
                     Meetings.put( name_course,  (Map<String, Object>)data_snapshot.getValue());
                     spinner_courses_init(Meetings);
@@ -129,7 +125,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position > 0 ){
                     String selected_by_user = spinner_courses_names.getSelectedItem().toString();
-//                String selected_by_user2 = parent.getItemAtPosition(position).toString();
+
                     setSpinner_dates_init(meetings_info2, selected_by_user);
                 }
             }
@@ -148,9 +144,13 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         //Checking for available slots
         available_slots.add("בחר SLOT");
         for( String slot : _slots.keySet()){
-            if (_slots.get(slot) == true){
-                String statement = _date + " - " + slot;
-                available_slots.add(statement);
+            try {
+                if(_slots.get(slot) == true){
+                    String statement = _date + " - " + slot;
+                    available_slots.add(statement);
+                }
+            }catch(Exception e){
+
             }
         }
 
@@ -196,9 +196,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String slot_selected_by_user = spinner_dates.getSelectedItem().toString();
-//                String selected_by_user2 = parent.getItemAtPosition(position).toString();
+//
                 if (position > 0){
-                    //Set it to 'Taken' - false in _slots.
 
                     String chosen_time = slot_selected_by_user.substring(slot_selected_by_user.indexOf("- ") +2);
                     HashMap <String, Boolean> time_table = (HashMap<String, Boolean>) meetings_info2.get(chosen_course).get("slots");
@@ -208,9 +207,9 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
                     setTheAppointment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO Set the slot as busy on DB
-                            FirebaseDatabase.getInstance().getReference().child("appointments")
-                                    .child(chosen_course).child("slots").child(chosen_time).setValue(false);
+                            String uid=FirebaseAuth.getInstance().getUid();
+                            UpdateUser(chosen_course,chosen_time,uid);
+
                         }
                     });
 
@@ -227,8 +226,35 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
 
 
 
+    }
+    //This func adds the name of the user and updating appointments list of the user.(zohar)
+    private void UpdateUser(String chosen_course,String chosen_time,String uid){
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("StudentUser").child(uid);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               User user = snapshot.getValue(User.class);
+               String StudentID= user.getUserID();
+               String studentName= user.getName();
+                FirebaseDatabase.getInstance().getReference().child("appointments").child(chosen_course).child("slots").child(chosen_time)
+                        .child("name").setValue(studentName);
+                FirebaseDatabase.getInstance().getReference().child("StudentUser").child(StudentID)
+                        .child("Appointments").child(chosen_course).setValue(chosen_time);
+
+
+//
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
+
 
 
 

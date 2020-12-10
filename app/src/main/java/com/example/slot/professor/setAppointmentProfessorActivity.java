@@ -87,6 +87,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                 String key = course + "-" + user.getName() + "-" +appointment.getDate();
 
                 Map<String, Object> dataMap = appointment.toMap();
+                dataMap.put("LecturerID",FirebaseAuth.getInstance().getUid());
                 FirebaseDatabase.getInstance().getReference().child("appointments").child(key).setValue(dataMap); //putting appointments in the DB
 
                 startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
