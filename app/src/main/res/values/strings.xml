@@ -16,4 +16,6 @@
     <string name="setStartTime">הגדר שעת התחלה</string>
     <string name="setEndTime">הגדר שעת סיום</string>
     <string name="student_set_appointment">קבע שעת קבלה</string>
+    <string name="chooseDate">בחר תאריך ושעה</string>
+    <string name="chooseCourse">בחר קורס</string>
 </resources>

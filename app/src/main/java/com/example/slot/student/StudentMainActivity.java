@@ -54,5 +54,3 @@ public class StudentMainActivity extends AppCompatActivity {
 
     }
 }
-
-//Test for github commit zohar

@@ -21,6 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static java.net.URLEncoder.encode;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -80,13 +85,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
                     User NewUser= new User(email, auth.getUid(),name, permission);
                     Toast.makeText(SignUpActivity.this,"הרשמה בוצעה בהצלחה!",Toast.LENGTH_SHORT).show();
                     if(permission.equals("מרצה")) {
-                        //FirebaseDatabase.getInstance().getReference().child("LecturerUser").child(auth.getUid()).setValue(email);
                         FirebaseDatabase.getInstance().getReference().child("LecturerUser").child(auth.getUid()).setValue(NewUser);
+
                     }else{
-                      //  FirebaseDatabase.getInstance().getReference().child("StudentUser").child(auth.getUid()).setValue(email);
                         FirebaseDatabase.getInstance().getReference().child("StudentUser").child(auth.getUid()).setValue(NewUser);
                     }
                     startActivity(new Intent(SignUpActivity.this, SignIn_Activity.class));

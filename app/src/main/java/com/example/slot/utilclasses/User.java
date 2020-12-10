@@ -1,5 +1,9 @@
 package com.example.slot.utilclasses;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class User {
     private String mail, userID, name, permission;
 
@@ -13,6 +17,7 @@ public class User {
         userID = u;
         name= n;
         permission = p;
+
     }
 
     public String getMail() {
@@ -29,4 +34,5 @@ public class User {
     public String getPermission() {
         return permission;
     }
+
 }
