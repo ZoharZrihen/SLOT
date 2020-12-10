@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +35,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Spinner spinner_courses_names;
     private Spinner spinner_dates;
     private Button  backToStudenMain;
+    private Button setTheAppointment;
     Map<String, String> meetings_info = new HashMap<>();
     Map<String, Map<String, Object>> Meetings = new HashMap<>();
 
@@ -48,6 +51,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         spinner_dates = findViewById(R.id.spinner_dates);
         spinner_courses_names = findViewById(R.id.spinner_courses);
         backToStudenMain = findViewById(R.id.go_back);
+        setTheAppointment = findViewById(R.id.set_specific_appointment_student);
+
         backToStudenMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,21 +86,53 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         });
 
 
+
     }
     private void spinner_courses_init(Map <String,Map<String,Object>>meetings_info2){
-        ArrayList<String> courses_names = new ArrayList<>(meetings_info2.keySet());
+        ArrayList<String> courses_names = new ArrayList<>();
+        courses_names.add("בחר קורס");
+        courses_names.addAll(meetings_info2.keySet());
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names);
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names){
+                    @Override
+                    public boolean isEnabled(int position){
+                        if(position == 0)
+                        {
+                            // Disable the first item from Spinner
+                            // First item will be use for hint
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    @Override
+                    public View getDropDownView(int position, View convertView,
+                                                ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView tv = (TextView) view;
+                        if(position == 0){
+                            // Set the hint text color gray
+                            tv.setTextColor(Color.GRAY);
+                        }
+                        else {
+                            tv.setTextColor(Color.BLACK);
+                        }
+                        return view;
+                    }
+                };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_courses_names.setAdapter(adapter);
         spinner_courses_names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected_by_user = spinner_courses_names.getSelectedItem().toString();
+                if(position > 0 ){
+                    String selected_by_user = spinner_courses_names.getSelectedItem().toString();
 //                String selected_by_user2 = parent.getItemAtPosition(position).toString();
-                setSpinner_dates_init(meetings_info2, selected_by_user);
+                    setSpinner_dates_init(meetings_info2, selected_by_user);
+                }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -109,6 +146,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         HashMap<String, Boolean> _slots = (HashMap<String, Boolean>) course_info.get("slots");
         ArrayList<String> available_slots = new ArrayList<>();
         //Checking for available slots
+        available_slots.add("בחר SLOT");
         for( String slot : _slots.keySet()){
             if (_slots.get(slot) == true){
                 String statement = _date + " - " + slot;
@@ -119,11 +157,39 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         // If there are no available slots
         if( available_slots.size() == 0){
             //Too full, display a message to user.
-            available_slots.add("הכל תפוס");
+            Toast.makeText(this, "אין מקום !", Toast.LENGTH_LONG);
         }
 
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,available_slots);
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,available_slots){
+                    @Override
+                    public boolean isEnabled(int position){
+                        if(position == 0)
+                        {
+                            // Disable the first item from Spinner
+                            // First item will be use for hint
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    @Override
+                    public View getDropDownView(int position, View convertView,
+                                                ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView tv = (TextView) view;
+                        if(position == 0){
+                            // Set the hint text color gray
+                            tv.setTextColor(Color.GRAY);
+                        }
+                        else {
+                            tv.setTextColor(Color.BLACK);
+                        }
+                        return view;
+                    }
+                };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_dates.setAdapter(adapter);
         spinner_dates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -131,7 +197,25 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String slot_selected_by_user = spinner_dates.getSelectedItem().toString();
 //                String selected_by_user2 = parent.getItemAtPosition(position).toString();
-                // TODO Set the slot as busy on DB
+                if (position > 0){
+                    //Set it to 'Taken' - false in _slots.
+
+                    String chosen_time = slot_selected_by_user.substring(slot_selected_by_user.indexOf("- ") +2);
+                    HashMap <String, Boolean> time_table = (HashMap<String, Boolean>) meetings_info2.get(chosen_course).get("slots");
+                    time_table.put(chosen_course, false);
+
+                    setTheAppointment.setVisibility(View.VISIBLE);
+                    setTheAppointment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Set the slot as busy on DB
+                            FirebaseDatabase.getInstance().getReference().child("appointments")
+                                    .child(chosen_course).child("slots").child(chosen_time).setValue(false);
+                        }
+                    });
+
+                }
+
             }
 
             @Override
