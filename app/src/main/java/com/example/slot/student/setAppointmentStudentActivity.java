@@ -34,6 +34,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Spinner spinner_dates;
     private Button  backToStudenMain;
     Map<String, String> meetings_info = new HashMap<>();
+    Map<String, Map<String, Object>> Meetings = new HashMap<>();
 
     DatabaseReference rootRef, appointmentRef;
 
@@ -64,11 +65,14 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data_snapshot : snapshot.getChildren()){
-                    String name_of_meeting = data_snapshot.getKey();
-                    String all_info = data_snapshot.getValue().toString();
-                    meetings_info.put(name_of_meeting, all_info);
-//                    System.out.println("\n\n\n\n"+ meetings_info.toString());
-                    spinner_courses_init(meetings_info);
+//                    String name_of_meeting = data_snapshot.getKey();
+//                    String all_info = data_snapshot.getValue().toString();
+//                    meetings_info.put(name_of_meeting, all_info);
+//                    spinner_courses_init(meetings_info);
+
+                    String name_course = data_snapshot.getKey();
+                    Meetings.put( name_course,  (Map<String, Object>)data_snapshot.getValue());
+                    spinner_courses_init(Meetings);
                 }
             }
             @Override
@@ -76,30 +80,9 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             }
         });
 
-        // A list of only the courses name (needed for the adapter.
-//        ArrayList<String> courses_names = new ArrayList<>(meetings_info.keySet());
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner_courses_names.setAdapter(adapter);
-//        spinner_courses_names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String selected_by_user = spinner_courses_names.getSelectedItem().toString();
-////                String selected_by_user2 = parent.getItemAtPosition(position).toString();
-//                setSpinner_dates_init(meetings_info, selected_by_user);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
-
 
     }
-    private void spinner_courses_init(Map <String,String>meetings_info2){
+    private void spinner_courses_init(Map <String,Map<String,Object>>meetings_info2){
         ArrayList<String> courses_names = new ArrayList<>(meetings_info2.keySet());
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses_names);
@@ -120,12 +103,46 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         });
     }
 
-    private void setSpinner_dates_init(Map <String,String>meetings_info2, String chosen_course){
-        String infoOfCourseChosen = meetings_info2.get(chosen_course);
-        //TODO Elements to extract from that string:
-        // Check if there are 'slots' that are available (marked true in field 'slots'
-        //          If there is, then show them in this format DATE - TIME
-        //          Else show 'אין מקום פנוי לקורס הזה'
+    private void setSpinner_dates_init(Map <String,Map<String,Object>>meetings_info2 , String chosen_course){
+        Map<String, Object> course_info = meetings_info2.get(chosen_course);
+        String _date = (String)course_info.get("date");
+        HashMap<String, Boolean> _slots = (HashMap<String, Boolean>) course_info.get("slots");
+        ArrayList<String> available_slots = new ArrayList<>();
+        //Checking for available slots
+        for( String slot : _slots.keySet()){
+            if (_slots.get(slot) == true){
+                String statement = _date + " - " + slot;
+                available_slots.add(statement);
+            }
+        }
+
+        // If there are no available slots
+        if( available_slots.size() == 0){
+            //Too full, display a message to user.
+            available_slots.add("הכל תפוס");
+        }
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,available_slots);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_dates.setAdapter(adapter);
+        spinner_dates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String slot_selected_by_user = spinner_dates.getSelectedItem().toString();
+//                String selected_by_user2 = parent.getItemAtPosition(position).toString();
+                // TODO Set the slot as busy on DB
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
 
     }
 
