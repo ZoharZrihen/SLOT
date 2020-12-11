@@ -64,7 +64,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfessorMainActivity.this, showAppointmentProfessorActivity.class));
-                finish();
+//                finish();
             }
         });
 

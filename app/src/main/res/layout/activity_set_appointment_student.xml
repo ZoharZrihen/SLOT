@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toTopOf="@+id/spinner_dates"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.248" />
 
     <TextView
         android:id="@+id/choose_course"
@@ -29,7 +30,8 @@
         app:layout_constraintBottom_toTopOf="@+id/spinner_courses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.162" />
 
     <TextView
         android:id="@+id/choose_date"

@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/professorNameShowAppointment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="שם"
+        android:layout_width="149dp"
+        android:layout_height="27dp"
+        android:text="בחר שעת קבלה"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,5 +28,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/professorNameShowAppointment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

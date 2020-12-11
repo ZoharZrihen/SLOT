@@ -72,7 +72,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data_snapshot : snapshot.getChildren()){
                     String name_course = data_snapshot.getKey();
-                    Meetings.put( name_course,  (Map<String, Object>)data_snapshot.getValue());
+                    Meetings.put( name_course,  (Map<String,  Object>)data_snapshot.getValue());
                     spinner_courses_init(Meetings);
                 }
             }
@@ -80,10 +80,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
-
     }
+
     private void spinner_courses_init(Map <String,Map<String,Object>>meetings_info2){
         ArrayList<String> courses_names = new ArrayList<>();
         courses_names.add("בחר קורס");
