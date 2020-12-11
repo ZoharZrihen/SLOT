@@ -3,7 +3,16 @@ package com.example.slot.professor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.slot.R;
@@ -16,23 +25,63 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class showAppointmentProfessorActivity extends AppCompatActivity {
     private TextView current_user;
+    private Button back;
+    private Map<String,Map<String,Object>> myAppointments;
+    private Spinner spinnerAppointments;
+    private ListView slots;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_appointment_professor);
-
-// Dean: getting the professor name from DB and presenting it on the screen.
-        current_user = findViewById(R.id.professorNameShowAppointment);
+        slots=(ListView)findViewById(R.id.appointment_time_professor);
+        spinnerAppointments=findViewById(R.id.spinner_courses_professor);
+        back=findViewById(R.id.backFromProfessorShow);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(showAppointmentProfessorActivity.this,ProfessorMainActivity.class));
+                finish();
+            }
+        });
+        current_user = findViewById(R.id.hello_professor_show);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("LecturerUser").child(FirebaseAuth.getInstance().getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User Professor = snapshot.getValue(User.class);
-                current_user.setText( " שלום "+ Professor.getName() );
+                current_user.setText( Professor.getName()+", אלו הפגישות שהגדרת:" );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //Database reference to 'appointments'
+        DatabaseReference ref2 = database.getReference("appointments");
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override  //Sorting into myAppointments only the relevant meetings for the lecturer(working good)
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myAppointments=new HashMap<>();
+                String id=FirebaseAuth.getInstance().getUid();
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    String course=ds.getKey();
+                    Map<String,Object>tempMap=(Map<String,Object>)ds.getValue();
+                    if(tempMap.get("LecturerID").toString().equals(id)){
+                        myAppointments.put(course,tempMap);
+                    }
+                }
+                OrderAppointmentsToShow(myAppointments);
             }
 
             @Override
@@ -41,8 +90,76 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void OrderAppointmentsToShow(Map<String,Map<String,Object>> appointments){
+        ArrayList<String> courses=new ArrayList<>();
+        courses.add("בחר פגישה:");
+        courses.addAll(appointments.keySet());
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,courses){
+                    @Override
+                    public boolean isEnabled(int position){
+                        if(position == 0)
+                        {
+                            // Disable the first item from Spinner
+                            // First item will be use for hint
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    @Override
+                    public View getDropDownView(int position, View convertView,
+                                                ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView tv = (TextView) view;
+                        if(position == 0){
+                            // Set the hint text color gray
+                            tv.setTextColor(Color.GRAY);
+                        }
+                        else {
+                            tv.setTextColor(Color.BLACK);
+                        }
+                        return view;
+                    }
+                };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAppointments.setAdapter(adapter);
+        spinnerAppointments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position > 0 ){
+                    String selected_by_user = spinnerAppointments.getSelectedItem().toString();
+                        setListView((Map<String, Object>) myAppointments.get(selected_by_user).get("slots"));
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setListView(Map<String,Object> appointmentsTimes){
+
+        ArrayList<String> times=new ArrayList<>();
+        for(String time : appointmentsTimes.keySet()){
+                String name=appointmentsTimes.get(time).toString();
+                if(name.contains("true")){
+                    times.add(time+" פנוי ");
+                }else{
+                    String studentName=name.substring(name.indexOf("=")+1,name.length()-1);
+                    times.add(time+" "+studentName);
+                }
 
 
+        }
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,times);
+        slots.setAdapter(adapter);
 
     }
-}
+
+    }
