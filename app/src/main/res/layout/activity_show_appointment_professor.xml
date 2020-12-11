@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".professor.showAppointmentProfessorActivity">
 
 
     <TextView
-        android:id="@+id/professorNameShowAppointment"
-        android:layout_width="149dp"
-        android:layout_height="27dp"
-        android:text="בחר שעת קבלה"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/showAppointment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner_appointment"
+        android:id="@+id/hello_professor_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.033"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/professorNameShowAppointment" />
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="@string/welcome_professor"
+        android:textColor="@color/purpBlue"
+        android:textSize="24sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Spinner
+        android:id="@+id/spinner_courses_professor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hello_professor_show"/>
+
+    <ListView
+        android:id="@+id/appointment_time_professor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/spinner_courses_professor" >
+    </ListView>
+
+    <Button
+        android:id="@+id/backFromProfessorShow"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appointment_time_professor"
+        android:layout_centerVertical="true"
+        android:text="@string/back" />
+
+
+</RelativeLayout>
