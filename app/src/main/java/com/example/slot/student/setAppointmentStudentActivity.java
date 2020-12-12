@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -140,7 +141,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
         HashMap<String, Boolean> _slots = (HashMap<String, Boolean>) course_info.get("slots");
         ArrayList<String> available_slots = new ArrayList<>();
         //Checking for available slots
-        available_slots.add("בחר SLOT");
+//        available_slots.add("בחר SLOT");
         for( String slot : _slots.keySet()){
             try {
                 if(_slots.get(slot) == true){
@@ -157,7 +158,8 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             //Too full, display a message to user.
             Toast.makeText(this, "אין מקום !", Toast.LENGTH_LONG);
         }
-
+        Collections.sort(available_slots);
+        available_slots.add(0, "בחר SLOT");
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,available_slots){
                     @Override
@@ -207,6 +209,9 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
                         public void onClick(View v) {
                             String uid=FirebaseAuth.getInstance().getUid();
                             UpdateUser(chosen_course,chosen_time,uid);
+                            Toast.makeText(setAppointmentStudentActivity.this, "שעת קבלה נקבעה בהצלחה!",Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(setAppointmentStudentActivity.this,StudentMainActivity.class));
+                            finish();
 
                         }
                     });

@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -157,6 +158,7 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
 
 
         }
+        Collections.sort(times);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,times);
         slots.setAdapter(adapter);
