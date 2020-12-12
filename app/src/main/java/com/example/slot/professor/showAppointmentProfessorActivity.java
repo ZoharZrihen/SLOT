@@ -52,6 +52,7 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         current_user = findViewById(R.id.hello_professor_show);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("LecturerUser").child(FirebaseAuth.getInstance().getUid());
         ref.addValueEventListener(new ValueEventListener() {
