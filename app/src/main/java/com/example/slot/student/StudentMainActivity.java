@@ -1,18 +1,27 @@
 package com.example.slot.student;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.slot.MainActivity;
 import com.example.slot.R;
+import com.example.slot.utilclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class StudentMainActivity extends AppCompatActivity {
     private Button set, show, logout;
+    private TextView hello;
 
     private FirebaseAuth auth;
 
@@ -22,10 +31,25 @@ public class StudentMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
 
+        hello=findViewById(R.id.welcome_student);
         set = findViewById(R.id.set_appointment_student);
         show = findViewById(R.id.show_appointment_student);
         logout = findViewById(R.id.sign_out_student_main);
         auth = FirebaseAuth.getInstance();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("StudentUser").child(FirebaseAuth.getInstance().getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User Student = snapshot.getValue(User.class);
+                hello.setText( " ברוך הבא "+ Student.getName() );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         set.setOnClickListener(new View.OnClickListener() {
             @Override

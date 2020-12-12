@@ -116,7 +116,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
                         startHour = selectedHour;
                         startMinute = selectedMinute;
-                        Toast.makeText(setAppointmentProfessorActivity.this, "שעת התחלה: "+ selectedHour + ":" + minute, Toast.LENGTH_LONG).show();
+                        Toast.makeText(setAppointmentProfessorActivity.this, "שעת התחלה: "+ selectedHour + ":" + selectedMinute, Toast.LENGTH_LONG).show();
                     }
                 },hour,minute,true);
                 timePickerDialog.setTitle("בחר שעת התחלה");
@@ -136,7 +136,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
                         endHour = selectedHour;
                         endMinute = selectedMinute;
-                        Toast.makeText(setAppointmentProfessorActivity.this, "שעת התחלה: "+ selectedHour + ":" + minute, Toast.LENGTH_LONG).show();
+                        Toast.makeText(setAppointmentProfessorActivity.this, "שעת סיום: "+ selectedHour + ":" +selectedMinute, Toast.LENGTH_LONG).show();
                     }
                 },hour,minute,true);
                 timePickerDialog.setTitle("בחר שעת סיום");
@@ -158,7 +158,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                         year = selectedYear;
                         month = selectedMonth + 1;
                         day = selectedDay;
-                        Toast.makeText(setAppointmentProfessorActivity.this, "תאריך שהוגדר: "+selectedDay+"/"+selectedMonth+"/"+selectedYear,Toast.LENGTH_LONG).show();
+                        Toast.makeText(setAppointmentProfessorActivity.this, "תאריך שהוגדר: "+selectedDay+"/"+(selectedMonth+1)+"/"+selectedYear,Toast.LENGTH_LONG).show();
                     }
                 },mYear,mMonth,mDay);
                 datePickerDialog.setTitle("בחר תאריך");
