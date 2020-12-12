@@ -151,7 +151,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
                     available_slots.add(statement);
                 }
             }catch(Exception e){
-
+// if code reaches here then the slot is taken.
             }
         }
 

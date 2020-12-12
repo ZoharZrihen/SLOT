@@ -30,10 +30,9 @@
         android:id="@+id/appointment_time_professor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/spinner_courses_professor" >
-    </ListView>
+        android:layout_below="@+id/spinner_courses_professor"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="50dp"></ListView>
 
     <Button
         android:id="@+id/backFromProfessorShow"
@@ -41,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/appointment_time_professor"
         android:layout_centerVertical="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="70dp"
         android:text="@string/back" />
 
 
