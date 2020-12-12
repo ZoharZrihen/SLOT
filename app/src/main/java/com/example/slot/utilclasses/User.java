@@ -35,4 +35,19 @@ public class User {
         return permission;
     }
 
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 }

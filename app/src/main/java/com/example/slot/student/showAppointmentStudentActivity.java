@@ -82,7 +82,7 @@ public class showAppointmentStudentActivity extends AppCompatActivity {
         pretty_course += part + " ";
       }
       String slot = student_appointments.get(key);
-      view_of_appointments.add(pretty_course + "   -    " + slot);
+      view_of_appointments.add("     " + pretty_course + "   -    " + slot);
     }
 
     ArrayAdapter<String> adapter =

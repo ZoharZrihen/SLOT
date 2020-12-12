@@ -15,18 +15,28 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class Appointment implements Serializable {
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Duration interval;
-    private Duration totalDuration;
-//  private Duration slotDuration;
-    private Map<String, Boolean> slotsMap;
+    private LocalDate date;                 // Date of appointment
+    private LocalTime startTime;            // Start time of appointment
+    private LocalTime endTime;              // End time of appointment
+    private Duration totalDuration;         // Total duration of appointment
+    private Duration interval;              // Interval set by professor time of appointment
+    private Map<String, Boolean> slotsMap;  // Map of slots in this appointment
 
-    public Appointment() {
-        // Default constructor required for calls to DataSnapshot.getValue(Appointment.class)
-    }
 
+    public Appointment() { }                // Default constructor
+                                            // required for calls to DataSnapshot.getValue(Appointment.class)
+
+
+    /**
+     * @param startHour - Start hour of appointment
+     * @param startMinute - Start minute of appointment
+     * @param endHour - End hour of appointment
+     * @param endMinute - End minute of appointment
+     * @param interval - Interval between students
+     * @param day - Day of appointment's date
+     * @param month - Month of appointment's date
+     * @param year - Year in appointment's date
+     */
     public Appointment(int startHour, int startMinute, int endHour, int endMinute, int interval, int day, int month, int year) {
         this.date = LocalDate.of(year, month, day);
         this.startTime = LocalTime.of(startHour, startMinute);

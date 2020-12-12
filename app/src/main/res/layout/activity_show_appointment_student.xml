@@ -33,9 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/button_back_to_main_student"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_student_show_courses"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_student_show_courses" />
 </androidx.constraintlayout.widget.ConstraintLayout>
