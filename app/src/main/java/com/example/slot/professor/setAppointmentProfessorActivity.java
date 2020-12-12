@@ -63,9 +63,9 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue(User.class));
+//                System.out.println(dataSnapshot.getValue(User.class));
                 user = dataSnapshot.getValue(User.class);
-                System.out.println(user.getName());
+//                System.out.println(user.getName());
             }
 
             @Override
@@ -82,7 +82,7 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
                 interval = Integer.parseInt(editTextInterval.getText().toString());
 //                System.out.println(startHour + "," + startMinute + "," + endHour + "," + endMinute + "," + interval + "," + day + "," + month + "," + year);
                 Appointment appointment = new Appointment(startHour, startMinute, endHour, endMinute, interval, day, month, year);
-                System.out.println(appointment.toMap());
+//                System.out.println(appointment.toMap());
                 String course = courseName.getText().toString();
                 String key = course + "-" + user.getName() + "-" +appointment.getDate();
 
