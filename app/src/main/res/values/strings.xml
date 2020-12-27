@@ -18,4 +18,6 @@
     <string name="student_set_appointment">קבע שעת קבלה</string>
     <string name="chooseDate">בחר תאריך ושעה</string>
     <string name="chooseCourse">בחר קורס</string>
+    <string name="login">התחברות</string>
+    <string name="signin">הרשמה</string>
 </resources>

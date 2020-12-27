@@ -8,8 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SLOT">
-        <activity android:name=".student.showAppointmentStudentActivity"></activity>
+        android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
+
+        <activity android:name=".student.showAppointmentStudentActivity" />
         <activity android:name=".student.setAppointmentStudentActivity" />
         <activity android:name=".professor.showAppointmentProfessorActivity" />
         <activity android:name=".professor.setAppointmentProfessorActivity" />
