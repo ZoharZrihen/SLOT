@@ -20,4 +20,5 @@
     <string name="chooseCourse">בחר קורס</string>
     <string name="login">התחברות</string>
     <string name="signin">הרשמה</string>
+    <string name="settings">הגדרות</string>
 </resources>
