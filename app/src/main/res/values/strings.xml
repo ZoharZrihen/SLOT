@@ -11,7 +11,7 @@
     <string name="goBack">חזור</string>
     <string name="welcome_professor">ברוך הבא מרצה</string>
     <string name="welcome_student">ברוך הבא סטודנט</string>
-    <string name="singOut">התנתק</string>
+    <string name="signOut">התנתק</string>
     <string name="setDate">הגדר תאריך</string>
     <string name="setStartTime">הגדר שעת התחלה</string>
     <string name="setEndTime">הגדר שעת סיום</string>
@@ -20,5 +20,5 @@
     <string name="chooseCourse">בחר קורס</string>
     <string name="login">התחברות</string>
     <string name="signin">הרשמה</string>
-    <string name="settings">הגדרות</string>
+    <string name="backToMain">חזור למסך הראשי</string>
 </resources>

@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +21,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slot.MainActivity;
 import com.example.slot.R;
+import com.example.slot.professor.ProfessorMainActivity;
 import com.example.slot.utilclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,12 +39,14 @@ public class showAppointmentStudentActivity extends AppCompatActivity {
   HashMap<String, String> appointments = new HashMap<>();
   private Button back_to_student_activity;
   private ListView appointments_list_view;
+  private FirebaseAuth auth;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_show_appointment_student);
     appointments_list_view = findViewById(R.id.listview_student_appointments);
     back_to_student_activity = findViewById(R.id.button_back_to_main_student);
+    auth= FirebaseAuth.getInstance();
     back_to_student_activity.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -90,6 +97,26 @@ public class showAppointmentStudentActivity extends AppCompatActivity {
     appointments_list_view.setAdapter(adapter);
 
 
+  }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu,menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if(item.getItemId()==R.id.menu_logout){
+      auth.signOut();
+      startActivity(new Intent(showAppointmentStudentActivity.this, MainActivity.class));
+      finish();
+    }else if(item.getItemId()==R.id.menu_backToMain){
+      startActivity(new Intent(showAppointmentStudentActivity.this, StudentMainActivity.class));
+      finish();
+    }else{
+      return super.onOptionsItemSelected(item);
+    }
+    return true;
   }
 
 

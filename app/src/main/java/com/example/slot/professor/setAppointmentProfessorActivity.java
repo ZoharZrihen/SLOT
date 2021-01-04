@@ -1,11 +1,14 @@
 package com.example.slot.professor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.slot.MainActivity;
 import com.example.slot.utilclasses.Appointment;
 import com.example.slot.R;
 import com.example.slot.utilclasses.User;
@@ -166,11 +170,27 @@ public class setAppointmentProfessorActivity extends AppCompatActivity {
             }
         });
 
-//        Appointment appointment= new Appointment( startHour, startMinute, endHour, endMinute,Interval, day,month,year);
-//        String appointmentID=course + "- " +user.getName() + "- " +day+"/"+month+"/"+year;
-//        FirebaseDatabase.getInstance().getReference().child("Appointments").child(appointmentID).setValue(appointment); //putting appointments in the DB
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.menu_logout){
+            auth.signOut();
+            startActivity(new Intent(setAppointmentProfessorActivity.this, MainActivity.class));
+            finish();
+        }else if(item.getItemId()==R.id.menu_backToMain){
+            startActivity(new Intent(setAppointmentProfessorActivity.this, ProfessorMainActivity.class));
+            finish();
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 

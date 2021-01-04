@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.slot.MainActivity;
 import com.example.slot.R;
+import com.example.slot.student.StudentMainActivity;
 import com.example.slot.utilclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -77,14 +81,25 @@ public class ProfessorMainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
-
-
-
-
-
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.menu_logout){
+            auth.signOut();
+            startActivity(new Intent(ProfessorMainActivity.this, MainActivity.class));
+            finish();
+        }else if(item.getItemId()==R.id.menu_backToMain){
+            Toast.makeText(this,"הנך במסך הראשי",Toast.LENGTH_LONG).show();
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
+

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.utilclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,13 +40,14 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
     private Map<String,Map<String,Object>> myAppointments;
     private Spinner spinnerAppointments;
     private ListView slots;
-
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_appointment_professor);
         slots=(ListView)findViewById(R.id.appointment_time_professor);
+        auth=FirebaseAuth.getInstance();
         spinnerAppointments=findViewById(R.id.spinner_courses_professor);
         back=findViewById(R.id.backFromProfessorShow);
         back.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +167,26 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,times);
         slots.setAdapter(adapter);
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.menu_logout){
+            auth.signOut();
+            startActivity(new Intent(showAppointmentProfessorActivity.this, MainActivity.class));
+            finish();
+        }else if(item.getItemId()==R.id.menu_backToMain){
+            startActivity(new Intent(showAppointmentProfessorActivity.this, ProfessorMainActivity.class));
+            finish();
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     }

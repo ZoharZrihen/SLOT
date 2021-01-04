@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.utilclasses.Appointment;
 import com.example.slot.utilclasses.User;
@@ -38,6 +41,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Spinner spinner_dates;
     private Button  backToStudenMain;
     private Button setTheAppointment;
+    private FirebaseAuth auth;
 
     Map<String, Map<String, Object>> Meetings = new HashMap<>();
 
@@ -50,6 +54,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_appointment_student);
+        auth=FirebaseAuth.getInstance();
         spinner_dates = findViewById(R.id.spinner_dates);
         spinner_courses_names = findViewById(R.id.spinner_courses);
         backToStudenMain = findViewById(R.id.go_back);
@@ -256,6 +261,26 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.menu_logout){
+            auth.signOut();
+            startActivity(new Intent(setAppointmentStudentActivity.this, MainActivity.class));
+            finish();
+        }else if(item.getItemId()==R.id.menu_backToMain){
+            startActivity(new Intent(setAppointmentStudentActivity.this, StudentMainActivity.class));
+            finish();
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 
