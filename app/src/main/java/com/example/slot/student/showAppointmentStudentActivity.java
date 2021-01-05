@@ -2,6 +2,8 @@ package com.example.slot.student;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.professor.ProfessorMainActivity;
@@ -40,6 +43,7 @@ public class showAppointmentStudentActivity extends AppCompatActivity {
   private Button back_to_student_activity;
   private ListView appointments_list_view;
   private FirebaseAuth auth;
+  InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -76,6 +80,17 @@ public class showAppointmentStudentActivity extends AppCompatActivity {
 
       }
     });
+  }
+  @Override
+  protected void onStart() {
+    super.onStart();
+    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    registerReceiver(ibr, filter);
+  }
+  @Override
+  protected void onStop() {
+    super.onStop();
+    unregisterReceiver(ibr);
   }
 
 

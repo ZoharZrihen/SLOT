@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.student.StudentMainActivity;
@@ -29,6 +32,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
     private Button set, show, logOut;
     private FirebaseAuth auth;
     private TextView hello;
+    InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
 
 
     @Override
@@ -81,6 +85,17 @@ public class ProfessorMainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(ibr, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(ibr);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

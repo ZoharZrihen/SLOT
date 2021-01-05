@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.utilclasses.User;
@@ -35,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText name;
     private Button register;
     private Button back;
+    InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
 
     private FirebaseAuth auth;
     @Override
@@ -78,6 +82,17 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(ibr, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(ibr);
     }
 
     private void registerUser(String email, String password,String permission, String name) {

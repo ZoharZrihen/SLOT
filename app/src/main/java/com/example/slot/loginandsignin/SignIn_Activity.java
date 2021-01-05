@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.professor.ProfessorMainActivity;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
@@ -31,6 +34,7 @@ public class SignIn_Activity extends AppCompatActivity {
     private Button login;
     private Button back;
     private FirebaseAuth auth;
+    InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,17 @@ public class SignIn_Activity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(ibr, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(ibr);
     }
 
     private void loginUser(String email, String password) {

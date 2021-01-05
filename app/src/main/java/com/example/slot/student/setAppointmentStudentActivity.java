@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.utilclasses.Appointment;
@@ -42,6 +45,7 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
     private Button  backToStudenMain;
     private Button setTheAppointment;
     private FirebaseAuth auth;
+    InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
 
     Map<String, Map<String, Object>> Meetings = new HashMap<>();
 
@@ -86,6 +90,17 @@ public class setAppointmentStudentActivity extends AppCompatActivity  {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(ibr, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(ibr);
     }
 
     private void spinner_courses_init(Map <String,Map<String,Object>>meetings_info2){

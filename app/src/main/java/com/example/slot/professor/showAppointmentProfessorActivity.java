@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.slot.InternetBroadcastReceiver;
 import com.example.slot.MainActivity;
 import com.example.slot.R;
 import com.example.slot.utilclasses.User;
@@ -41,6 +44,7 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
     private Spinner spinnerAppointments;
     private ListView slots;
     private FirebaseAuth auth;
+    InternetBroadcastReceiver ibr=new InternetBroadcastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,17 @@ public class showAppointmentProfessorActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(ibr, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(ibr);
     }
     private void OrderAppointmentsToShow(Map<String,Map<String,Object>> appointments){
         ArrayList<String> courses=new ArrayList<>();
