@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".loginandsignin.SignUpActivity"
+    android:padding="10dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="הכנס כתובת אימייל"
+        android:id="@+id/email"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="100dp"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:hint="הכנס סיסמה"
+        android:inputType="textPassword" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="מרצה/סטודנט"
+        android:id="@+id/permission"
+        android:inputType="textPersonName"
+        android:layout_marginTop="200dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="שם: "
+        android:id="@+id/name"
+        android:layout_marginTop="250dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/name"
+        android:text="הירשם"
+        android:id="@+id/signup"/>
+
+    <Button
+        android:id="@+id/returnfromsignup"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_below="@id/signup"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="247dp"
+        android:text="חזור" />
+
+</RelativeLayout>
