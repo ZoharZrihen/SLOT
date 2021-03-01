@@ -22,7 +22,7 @@ The android app lets you:
     Student can know before hand if the professor is available.
     Allow student to know thous detail easily.
 - Professor:
->Professor can decide on convenient time and place.
+>> Professor can decide on convenient time and place.
 >Professor can add more slot if there is an high demand.
 >Professor can see his schedule and prepare according to.
     
