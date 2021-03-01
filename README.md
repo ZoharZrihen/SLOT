@@ -16,15 +16,15 @@ This android application allows you to schedule a slot of pre-determined time sl
 ## Features
 
 The android app lets you:
-- Students
+- Students:
     Student can assign them self in real-time to a slot. 
     Allow order between students and their respective time.
     Student can know before hand if the professor is available.
     Allow student to know thous detail easily.
-- Professor
-    Professor can decide on convenient time and place.
-    Professor can add more slot if there is an high demand.
-    Professor can see his schedule and prepare according to.
+- Professor:
+>Professor can decide on convenient time and place.
+>Professor can add more slot if there is an high demand.
+>Professor can see his schedule and prepare according to.
     
     
 <img src="/README/Application Class Overview.png" align="left"
