@@ -12,7 +12,7 @@ This app eas the final project during Software Engineering class.
 
 SLOT has been made for student a professors to comfortably mange and organize office hours.
 This android application allows you to schedule a slot of pre-determined time slot to you professors office hours.
-
+sdsds
 ## Features
 
 The android app lets you:
